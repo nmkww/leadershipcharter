@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Fly to a location based on scroll position</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js"></script>
+    <style>
+      body { margin: 0; padding: 0; }
+      #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    </style>
+  </head>
+  <body>
+    <style>
+            #map {
+            position: fixed;
+            width: 50%;
+            }
+            #features {
+            width: 50%;
+            margin-left: 50%;
+            font-family: sans-serif;
+            overflow-y: scroll;
+            background-color: #fafafa;
+            }
+            section {
+            padding: 25px 50px;
+            line-height: 25px;
+            border-bottom: 1px solid #ddd;
+            opacity: 0.25;
+            font-size: 20px;
+            font-family: Georgia, serif;
+            }
+            section.active {
+            opacity: 1;
+            }
+            section:last-child {
+            border-bottom: none;
+            margin-bottom: 1500px;
+            }
+            
+      
+      #marker_1 {
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/6f/ChessSet.jpg');
+      background-size: cover;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      }
+
+             #marker_2 {
+      background-image: url('https://static.onecms.io/wp-content/uploads/sites/9/2017/10/nebraska-curling-beer-ft-blog1017.jpg');
+      background-size: cover;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      }
+      
+      #marker_3 {
+      background-image: url('https://fhsroyalbanner.com/wp-content/uploads/2020/03/ib.logo_.1-896x900-1.png');
+      background-size: cover;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      }
+      
+      #marker_4 {
+      background-image: url('https://scontent.fyvr3-1.fna.fbcdn.net/v/t1.18169-9/18835929_269313156808745_6204270944977844125_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=Ng3ntd6GZP0AX8VX7Y5&tn=x6QO8SbewhxYU0nB&_nc_ht=scontent.fyvr3-1.fna&oh=00_AT8QUl9NO2WCxrbMMLE5LAJKJxsPMVjItC8HWGMEnZXIbg&oe=62CBB8DC');
+      background-size: cover;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      }
+      
+      
+
+      .mapboxgl-popup-content {
+        padding: 30px 30px 45px;
+        width: 500px;
+        font-size: 18px;
+      }
+      
+                  .map-overlay {
+      font: 16px/24px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+      position: absolute;
+      width: 40%;
+      top: 0;
+      left: 0;
+      padding: 5px;
+      }
+
+      .map-overlay .map-overlay-inner {
+      background-color: #fff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+      padding: 10px;
+      margin-bottom: 10px;
+      }
+
+      .map-overlay h2 {
+      line-height: 24px;
+      display: block;
+      margin: 0 0 5px;
+      }
+
+      .map-overlay h4 {
+      line-height: 18px;
+      display: block;
+      margin: 0 0 5px;
+      }
+
+      .map-overlay p {
+      line-height: 16px;
+      display: block;
+      margin: 0 0 5px;
+      }
+      
+    </style>
+
+    <div id="map"></div>
+    
+    
+    <div id="features">
+            
+      
+      
+      <section id="UBC" class="active">
+        <h3>Introduction</h3>
+        <p>
+          In my experience, the ability to bring together different people to
+          not only coexist but also work alongside one another towards a common
+          goal is what defines a leader. In my undergraduate degree at the
+          University of British Columbia, I studied international relations and
+          from my lessons in political science and history, this ability to lead
+          individuals towards realizing a common goal is what has historically
+          separated successful leaders from their failed counterparts. In
+          self-reflecting, I can certainly recognize that the values and
+          principles that guide my approach to leadership have certainly been
+          shaped by my education, experiences and mentors, in addition to my
+          family’s culture, traditions and the experiences of my parents and
+          grandparents.
+        </p>
+        <p>
+          While my major in my undergraduate degree was in international
+          relations, I did my minor in geographic computation. To offer some
+          personality in addition to deeper insight into the geographic contexts
+          that shaped my values and principles, I decided to program this
+          digital storyboard to visualize both me and my family’s journey to the
+          present.
+        </p>
+        <p>
+          This leadership charter first looks internationally and to the past,
+          examining the history of my family to provide insight into the
+          cultural context that has shaped my leadership values. Afterwards we
+          will return back here, to Vancouver, to consider the experiences and
+          individuals that have shaped my principles more directly and
+          personally.  
+        </p>
+        <p>
+          This leadership charter is designed to be interactive, to read the next segment scroll down on the right side, to interact with the pop-ups click on the images on the map.
+        </p>
+      </section>
+      <section id="guanzhou">
+        <h3>My Familial Context and Heritage</h3>
+        <p>
+          My family traces our heritage back to the Canton region of China, now
+          known as Guangzhou. All of my grandparents were born in this region
+          and lived there for the early years of their lives. For the most part,
+          my grandparents came from mostly rural villages on the periphery of
+          urban areas.
+        </p>
+        <p>
+          I have always found hearing the contrasting anecdotes between the
+          family cultures of my grandmother and grandfather on my mother’s side
+          fascinating and insightful into how my mother’s parents fostered our
+          family’s culture when they had children of their own. Both my
+          grandmother and grandfather were raised in different rural villages
+          which shaped their own familial cultures.
+        </p>
+        <p>
+          According to my family’s anecdotes, my great grandfather on my
+          grandmother’s side was famously greedy and stingy with his resources
+          despite being a fairly wealthy man. In contrast, while being
+          relatively poorer, my great grandfather on my grandfather’s side
+          prioritized principles of generosity and humility within his children.
+          Once my grandparents got married, similar to his father before him, my
+          grandfather prioritized fostering a culture of generosity and humility
+          amongst all his grandchildren. This culture still resonates in my
+          approach to leadership. When I assume leadership positions in school,
+          my work and extracurricular activities, I find leaders who exercise
+          generosity and humility in their leading compelling and try to do the
+          same when I’m a leader by ensuring that everyone has equal say in
+          conversations and by deferring to others who are more knowledgeable in
+          specific areas of knowledge even when I’m the leader in the broader
+          context.
+        </p>
+      </section>
+      <section id="cape-town">
+        <h3>Arriving in South Africa</h3>
+        <p>
+          However, in the early decades following the turn of the 20th century, spurred by economic potential and growing political tensions and conflict, my family moved from Guangzhou, China to South Africa. Initially much of my family used to live in Johannesburg, however, on the several vacations I have taken to South Africa, we often go to Cape Town where much of my family is now situated.</p><p>
+When my family initially moved to South Africa, alongside a growing Chinese diaspora at the time, Asian, Black and White communities were all segregated into racialized neighborhoods known as “townships” by the racist and discriminatory systems in place at the time. For my family and many Black and Asian people, segregation created significant stress and anxiety. For much of my family, traveling outside their designated communities could make them subject to persecution and suspicion from law enforcement. This combined with the many other systemic disadvantages at the time meant that they spent much of their time inside their segregated communities. </p><p>
+However, despite facing such discriminatory challenges to them, I have always found my family’s story and their connection with the South African-Chinese community more broadly inspiring. While the apartheid rules dictated that the Chinese community living in South Africa were limited to living only in certain areas, my grandparents and the friends close to them took it as an opportunity to organize and build up their local communities. From organizing sports leagues, community dinners, and Mahjong and games nights, I find the story of the Chinese community in South Africa building up the connections in their neighborhoods inspiring. </p><p>
+This value of building community and camaraderie is key to how I lead. It is my belief that people work best when they collaborate, trust and build off of one another. When I assume leadership positions, I aim to build up that familiarity and foster positive relationships between people. I believe that community can act as a strong glue for groups that work together allowing individuals who usually wouldn’t be willing to work together to thrive through collaboration. </p><p>
+Both my parents were born in South Africa and lived there into their thirties. However, escalating racial tension in the country, especially during the 1980s led to my family looking elsewhere to settle. With my grandparents getting older, the escalating racial tensions in South Africa led to my family looking for a new home. In the late 1980s my parents would move to Vancouver, Canada soon followed by my grandparents.
+
+        </p>
+      </section>
+      <section id="vancouver">
+        <h3>How My Lived Experiences Shaped Me</h3>
+        <p>
+          With my family’s immigration to Vancouver, we reach my arrival in the story. While my family’s unique culture and history has definitely shaped my personal beliefs and values, my lived experiences and mentor figures here in Vancouver also have played a large role shaping my view on leadership and how I lead. 
+        </p>
+      </section>
+
+      
+    </div>
+    
+          
+       <div class="map-overlay top">
+      <div class="map-overlay-inner">
+        <h2>Personal Leadership Charter and Development Plan.</h2>
+        <h4>Nathaniel Ming Ki, 54252879</h4>
+        <p>BAHR 505 Section DD2.</p>
+        <p>Scroll down to read and see more.</p>
+      </div>
+    
+    <script>
+            	mapboxgl.accessToken = 'pk.eyJ1Ijoid2l6YXJkbHl3YWZmbGVzIiwiYSI6ImNsMDc4aWNlNDI2cGkzY285ZGx1YzdjdXcifQ.BqXX3wSbZy4sB1ERDv5QdA';
+            const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-123.2460, 49.2606],
+            zoom: 13.5,
+            bearing: 27,
+            pitch: 45
+            });
+
+            const chapters = {
+            'UBC': {
+            bearing: 27,
+            center: [-123.2460, 49.2606],
+            zoom: 13.5,
+            bearing: 27,
+            pitch: 45
+            },
+            'guanzhou': {
+            duration: 6000,
+            center: [113.25, 23.11667],
+            bearing: 150,
+            zoom: 8.5,
+            pitch: 0
+            },
+            'cape-town': {
+            bearing: 90,
+            center: [18.4241, -33.9249],
+            zoom: 12,
+            speed: 1,
+            pitch: 10
+            },
+            'vancouver': {
+            bearing: 0,
+            center: [-123.1207, 49.2527],
+            zoom: 12.3
+            },
+
+            };
+
+            let activeChapterName = 'UBC';
+            function setActiveChapter(chapterName) {
+            if (chapterName === activeChapterName) return;
+
+            map.flyTo(chapters[chapterName]);
+
+            document.getElementById(chapterName).classList.add('active');
+            document.getElementById(activeChapterName).classList.remove('active');
+
+            activeChapterName = chapterName;
+            }
+
+            function isElementOnScreen(id) {
+            const element = document.getElementById(id);
+            const bounds = element.getBoundingClientRect();
+            return bounds.top < window.innerHeight && bounds.bottom > 0;
+            }
+
+            // On every scroll event, check which element is on screen
+            window.onscroll = () => {
+            for (const chapterName in chapters) {
+            if (isElementOnScreen(chapterName)) {
+            setActiveChapter(chapterName);
+            break;
+            }
+            }
+            };
+
+            const chs = document.createElement('div');
+      chs.id = 'marker_1';
+
+            const crl = document.createElement('div');
+            crl.id = 'marker_2';
+            const ib = document.createElement('div');
+            ib.id = 'marker_3'
+            const grt = document.createElement('div');
+            grt.id = 'marker_4'
+
+
+
+            const grandpa = [-123.11943953448484, 49.232062288682044];
+            const brad = [-123.1082, 49.24477];
+            const grandpa_pop = new mapboxgl.Popup({offset: 25}).setHTML(
+              '<h1>My Grandfather</h1><p>A figure whom I have always seen as a mentor to me has been my grandfather. While I have touched briefly on his experiences and journey, his relationship to me directly as a mentor figure has also taught me lessons as well. I can recall how when I was younger my grandfather and I would often play chess together. While I learnt how to command the different pieces of the game easily, I would often get frustrated trying to play fast without planning my next turns. My grandfather taught me that strategizing and planning were essential in chess and in life. These lessons from my games with my grandfather carry over into my work both individually and in groups, when given an objective I try to think of an outline or plan and approach problems in a strategic approach. Often chess requires a blend of strategizing but also dynamically adjusting to the circumstances to avoid becoming stuck in a singular pattern of thought. I find that valuing and practicing strategic thinking and dynamic problem solving arise often when thinking about how to approach problems and projects </p>.'
+            );
+
+
+      const brad_pop = new mapboxgl.Popup({offset: 25}).setHTML(
+                '<h1>Coach Brad</h1><p>In 2010, during the Winter Olympics in Vancouver, I watched my first game of curling. At the time, my mother had been pushing me towards learning a new sport so I decided to try out curling. Here, I would meet one of the longest lasting mentors in my life, my curling coach Brad. Coach Brad not only taught me how to curl but also deeply influenced how I lead. Curling is a sport with four players with one player assuming the role of team captain and shot caller known as the “skip”. In the years after I joined the junior development program under coach Brad, the program grew and with me being one of the more experienced juniors in the program coach Brad often pushed me and challenged me to assume the role of team leader. In curling, a team’s skip is typically its most experienced and best performing player. Since I often skipped my curling teams, I often felt the necessity to try to improve and learn more to the best of my abilities to become what I perceived as a good team leader. While being an expert on everything under one’s jurisdiction as a manager is often impractical, I believe coach Brad was a key mentor in leadership for me and pushed me towards becoming a team skip in curling shaped how I try to support my teammates and work towards improving myself as a team member. Last year coach Brad retired from actively coaching the junior development program at the Vancouver Curling Club and since then I have taken over as one of the new head coaches of the program.</p>'
+            );
+
+      const school = [-123.1253, 49.2205];
+      const school_pop = new mapboxgl.Popup({offset: 25}).setHTML(
+      '<h1>My Greatest Trial</h1><p>If I were asked to name my greatest trial, experience and accomplishment it would have to have been completing the international baccalaureate program at my highschool. The international baccalaureate (IB) diploma is an intensive highschool education program that faces students with a variety of diverse trials through more rigorous school requirements and intensive course programming. The IB program was one of the most formative experiences in my life and definitely reshaped my approach to education, learning and work ethics. The structure of the IB program rigorously challenges students with constant trials and assignments. Prior to the IB program, I would say I never strove or applied myself too hard in school, focusing on other passions in my life. However, after getting into the IB program at my highschool because several of my teachers advocated for my academic potential, I truly believe that I was transformed in the program’s crucible.</p><p>The constant assignments and intense coursework faced me and my cohort in the program with many trials, very few of which were easy. For me, IB pushed me far outside my comfort zone as I was plunged into such a demanding program. However, for me, completing IB was one of the greatest achievements in my life. I found that the amount of course work was never surpassed in my university experience which is far more lenient and customizable at UBC. Alternatively, perhaps it is a testament to how the program transformed my work ethic. Aside from my personal academic experience, another transformative part of the program was the social side of the program. Meeting the other students in the program was inspirational for me as I had the opportunity to meet students whose dedication to their schoolwork inspired me to work hard and always try and push further even if it is outside of my comfort zone. I believe that the program and the friends I made during the IB program instilled in me a sense that no matter the trials that might face me in the future, I can manifest the willpower and resilience to overcome the barriers and trials that face me. </p>'
+      )
+      
+      const greet = [-123.2460, 49.2606];
+      const greet_pop = new mapboxgl.Popup({offset: 25}).setHTML(
+      '<h1>Hello!</h1><p>My name is Nathaniel Ming Ki, thank you for taking the time to read my personal leadership charter.</p>')
+
+            new mapboxgl.Marker(chs)
+              .setLngLat(grandpa)
+              .setPopup(grandpa_pop)
+              .addTo(map);
+
+            new mapboxgl.Marker(crl)
+              .setLngLat(brad)
+              .setPopup(brad_pop)
+              .addTo(map);
+            
+            new mapboxgl.Marker(ib)
+              .setLngLat(school)
+              .setPopup(school_pop)
+              .addTo(map);
+      
+            new mapboxgl.Marker(grt)
+              .setLngLat(greet)
+              .setPopup(greet_pop)
+              .addTo(map);
+      
+    </script>
+  </body>
+</html>
